@@ -5,43 +5,37 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val darkPallete = darkColors(
+    primary = Orange200,
+    primaryVariant = Orange700,
+    background = Gray700,
+    surface = Gray500
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val lightPallete = lightColors(
+    primary = Blue500,
+    primaryVariant = Blue700,
+    secondary = Orange200,
+    secondaryVariant = Orange700,
+    background = Gray200,
+    surface = Color.White
 
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 
 @Composable
-fun DoctorWorkersTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+fun MaterialThemeDoctor(isDark: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    val systemUi = rememberSystemUiController()
+
+    val colors = if (isDark) {
+        systemUi.setStatusBarColor(Orange700)
+        darkPallete
     } else {
-        LightColorPalette
+        systemUi.setStatusBarColor(Blue700)
+        lightPallete
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    MaterialTheme(colors, content = content)
 }
