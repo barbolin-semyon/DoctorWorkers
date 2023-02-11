@@ -60,4 +60,6 @@ class AuthViewModel : ViewModel() {
             _resultRequestAuthDB.value = Result.success("registration")
         }
     }
+
+    fun signOut() = viewModelScope.launch { db.signOut() }
 }
