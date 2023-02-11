@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 class AuthViewModel : ViewModel() {
     private val db = AuthFirebaseDataSource
 
-    private val _resultRequestAuthDB = MutableLiveData<Result<String>>(null)
-    val resultRequestAuthorization: LiveData<Result<String>>
+    private val _resultRequestAuthDB = MutableLiveData<Result<String>?>()
+    val resultRequestAuthDB: LiveData<Result<String>?>
         get() = _resultRequestAuthDB
 
     fun isAuthorization() = db.getUser() != null
