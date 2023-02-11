@@ -45,7 +45,7 @@ class AuthViewModel : ViewModel() {
         avaragePrice: Int,
         name: String
     ) = viewModelScope.launch {
-        db.signIn(email, password).addOnSuccessListener {
+        db.createUser(email, password).addOnSuccessListener {
             addUserInDb(avaragePrice, name, it.user!!.uid)
         }
     }
