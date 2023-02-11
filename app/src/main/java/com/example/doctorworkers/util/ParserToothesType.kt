@@ -1,6 +1,7 @@
 package com.example.doctors.util
 
-import com.example.doctors.entities.Toothes
+import com.example.doctorworkers.model.entities.Toothes
+
 
 fun parseListIdToListToothes(listId: List<String>): MutableList<Toothes> {
     val toothes = mutableListOf<Toothes>()

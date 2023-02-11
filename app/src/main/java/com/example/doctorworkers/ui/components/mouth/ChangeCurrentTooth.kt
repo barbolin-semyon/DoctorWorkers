@@ -1,4 +1,4 @@
-package com.example.doctors.ui.views.main.profile
+package com.example.doctorworkers.ui.components.mouth
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.example.doctors.entities.Toothes
+import com.example.doctorworkers.model.entities.Toothes
 
 @Composable
 fun ChangeCurrentTooth(toothes: List<Toothes>, indexSelected: MutableState<Int>) {

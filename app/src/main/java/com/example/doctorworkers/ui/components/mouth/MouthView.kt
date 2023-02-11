@@ -1,4 +1,4 @@
-package com.example.doctors.ui.views.main.profile
+package com.example.doctorworkers.ui.components.mouth
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -7,13 +7,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.doctors.R
-import com.example.doctors.entities.Toothes
-import org.koin.core.definition.indexKey
+import com.example.doctorworkers.model.entities.Toothes
+import com.example.doctorworkers.ui.theme.Orange700
 import kotlin.math.absoluteValue
 
 
@@ -70,7 +70,7 @@ private fun currentToothIsSelected(index: Int, isUpperJaw: Boolean, indexSelecte
 @Composable
 fun Tooth(isUpperJaw: Boolean, tooth: Toothes, padding: Dp, isSelected: Boolean, size: Dp) {
 
-    val colorId = if (isSelected) R.color.red_500 else R.color.black
+    val color = if (isSelected) Orange700 else Color.Black
 
     Icon(
         painter = painterResource(id = tooth.icon),
@@ -79,6 +79,6 @@ fun Tooth(isUpperJaw: Boolean, tooth: Toothes, padding: Dp, isSelected: Boolean,
             .padding(top = padding)
             .size(size)
             .rotate(if (isUpperJaw) 180f else 0f),
-        tint = colorResource(id = colorId)
+        tint = color
     )
 }
