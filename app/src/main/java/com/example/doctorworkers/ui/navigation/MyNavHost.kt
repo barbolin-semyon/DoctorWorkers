@@ -18,7 +18,8 @@ fun MainNavHost(
     scaffoldState: ScaffoldState,
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-
+        auth(navController, scaffoldState)
+        main(navController)
     }
 }
 
@@ -31,10 +32,6 @@ private fun NavGraphBuilder.auth(navController: NavHostController, scaffoldState
         composable(AuthScreen.Registration.route) {
             Registration(navController = navController, scaffoldState = scaffoldState)
         }
-
-        composable(AuthScreen.InputInformation.route) {
-
-        }
     }
 }
 
@@ -43,8 +40,7 @@ private fun NavGraphBuilder.main(navController: NavHostController) {
         composable(MainScreen.Profile.route) {
 
         }
-
-
+        timetable(navController)
     }
 }
 
