@@ -20,7 +20,7 @@ fun ObserverRequestsToFirebase(
 ) {
     val scope = rememberCoroutineScope()
 
-    val result by viewModel.resultRequestAuthorization.observeAsState()
+    val result by viewModel.resultRequestAuthDB.observeAsState()
 
     if (result?.isSuccess == true) {
         navController.navigate(Screens.Main.route) {
