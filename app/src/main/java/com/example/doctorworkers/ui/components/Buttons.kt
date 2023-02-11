@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.doctors.R
-import com.example.doctors.Screen
-import com.example.doctors.view_model.AuthorizationViewModel
+import com.example.doctorworkers.R
+import com.example.doctorworkers.ui.navigation.Screens
+import com.example.doctorworkers.viewModel.AuthViewModel
 import java.util.*
 
 @Composable
@@ -55,11 +55,11 @@ fun AppTextButton(text: String, onClick: () -> Unit) {
 
 @Composable
 fun ButtonSignOut(navController: NavController) {
-    val authViewModel: AuthorizationViewModel = viewModel()
+    val authViewModel: AuthViewModel = viewModel()
 
     TextButton(onClick = {
         authViewModel.signOut()
-        navController.navigate(Screen.SignIn.route) {
+        navController.navigate(Screens.Auth.route) {
             launchSingleTop = true
         }
     }) {
