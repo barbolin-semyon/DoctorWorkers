@@ -16,7 +16,7 @@ sealed class AuthScreen(val route: String) {
 }
 
 sealed class MainScreen(val route: String, val description: String, @DrawableRes val icon: Int) {
-    object Profile: MainScreen("profile", "Описание", R.drawable.ic_home)
+    object Profile: MainScreen("profile", "Профиль", R.drawable.ic_home)
     object TimeTable: MainScreen("timetable","Расписание", R.drawable.ic_calendar)
 }
 
