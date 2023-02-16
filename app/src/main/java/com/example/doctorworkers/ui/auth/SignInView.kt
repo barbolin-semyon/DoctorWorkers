@@ -13,9 +13,11 @@ import com.example.doctorworkers.ui.navigation.AuthScreen
 import com.example.doctorworkers.viewModel.AuthViewModel
 
 @Composable
-fun SignInView(navController: NavController, scaffoldState: ScaffoldState) {
-    val viewModel: AuthViewModel = viewModel()
-
+fun SignInView(
+    navController: NavController,
+    scaffoldState: ScaffoldState,
+    authViewModel: AuthViewModel
+) {
     BackgroundAuthorization(sizeBackgroundImage = 410.dp) {
         Column {
             TitleAuth(text = "Авторизация")
@@ -27,7 +29,7 @@ fun SignInView(navController: NavController, scaffoldState: ScaffoldState) {
             TextFieldPassword(password = password, onValueChange = { password = it })
 
             AppButton(isEnabled = email.emailIfValid(), text = "Войти") {
-                viewModel.signInWithEmail(
+                authViewModel.signInWithEmail(
                     email = email,
                     password = password
                 )
@@ -36,12 +38,6 @@ fun SignInView(navController: NavController, scaffoldState: ScaffoldState) {
             AppTextButton(text = "Зарегистрироваться") {
                 navController.navigate(AuthScreen.Registration.route)
             }
-
-            ObserverRequestsToFirebase(
-                viewModel = viewModel,
-                navController = navController,
-                scaffoldState = scaffoldState
-            )
         }
     }
 }

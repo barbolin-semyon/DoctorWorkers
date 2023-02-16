@@ -13,12 +13,14 @@ import com.example.doctorworkers.ui.components.BackgroundAuthorization
 import com.example.doctorworkers.viewModel.AuthViewModel
 
 @Composable
-fun Registration(navController: NavController, scaffoldState: ScaffoldState) {
+fun Registration(
+    navController: NavController,
+    scaffoldState: ScaffoldState,
+    authViewModel: AuthViewModel
+) {
     BackgroundAuthorization(sizeBackgroundImage = 0.dp) {
         Column {
             TitleAuth("Регистрация")
-
-            val viewModel: AuthViewModel = viewModel()
 
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
@@ -77,7 +79,7 @@ fun Registration(navController: NavController, scaffoldState: ScaffoldState) {
                         && avaragePriceIsInt,
                 text = "Зарегистрироваться"
             ) {
-                viewModel.registration(
+                authViewModel.registration(
                     email = email,
                     password = password,
                     name = name,
@@ -85,12 +87,6 @@ fun Registration(navController: NavController, scaffoldState: ScaffoldState) {
                     enteredPasswordWork = code
                 )
             }
-
-            ObserverRequestsToFirebase(
-                viewModel = viewModel,
-                navController = navController,
-                scaffoldState = scaffoldState
-            )
         }
     }
 }
