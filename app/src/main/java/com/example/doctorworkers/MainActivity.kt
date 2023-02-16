@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.doctorworkers.ui.auth.ObserverAuthorizationState
+import com.example.doctorworkers.ui.navigation.BottomNavigationDoctorWorker
 import com.example.doctorworkers.ui.navigation.MainNavHost
 import com.example.doctorworkers.ui.navigation.Screens
 import com.example.doctorworkers.ui.theme.Gray200
@@ -41,9 +42,7 @@ class MainActivity : ComponentActivity() {
             MaterialThemeDoctor() {
                 Scaffold(
                     bottomBar = {
-                        /*BottomNavigationDoctor(
-                            navController = navController
-                        )*/
+                        BottomNavigationDoctorWorker(navController = navController)
                     },
                     scaffoldState = scaffoldState
                 ) {
