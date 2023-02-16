@@ -1,42 +1,31 @@
-package com.example.doctors.ui.views.auth
+package com.example.doctorworkers.ui.auth
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.example.doctorworkers.ui.navigation.Screens
+import com.example.doctorworkers.util.AuthorizationType
 import com.example.doctorworkers.viewModel.AuthViewModel
-import kotlinx.coroutines.launch
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun ObserverRequestsToFirebase(
+fun ObserverAuthorizationState(
     viewModel: AuthViewModel,
-    navController: NavController,
-    scaffoldState: ScaffoldState
+    navHostController: NavHostController
 ) {
-    val scope = rememberCoroutineScope()
+    val state = viewModel.typeAuthorization.observeAsState()
 
-    val result by viewModel.resultRequestAuthDB.observeAsState()
-
-    if (result?.isSuccess == true) {
-        navController.navigate(Screens.Main.route) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-
+    val route = when (state.value) {
+        AuthorizationType.AUTHORIZATION -> Screens.Main.route
+        AuthorizationType.NOT_AUTHORIZATION -> Screens.Auth.route
+        else -> Screens.Splash.route
     }
-    if (result?.isFailure == true) {
-        scope.launch {
-            scaffoldState.snackbarHostState
-                .showSnackbar("Произошла ошибка, попробуйте снова")
-        }
 
+    navHostController.navigate(route) {
+        popUpTo(route) {
+            inclusive = true
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }

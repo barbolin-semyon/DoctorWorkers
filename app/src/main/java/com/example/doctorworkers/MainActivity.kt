@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.doctorworkers.ui.auth.ObserverAuthorizationState
 import com.example.doctorworkers.ui.navigation.MainNavHost
 import com.example.doctorworkers.ui.navigation.Screens
 import com.example.doctorworkers.ui.theme.Gray200
@@ -57,28 +58,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ObserverAuthorizationState(
-    viewModel: AuthViewModel,
-    navHostController: NavHostController
-) {
-    val state = viewModel.typeAuthorization.observeAsState()
-
-    val route = when (state.value) {
-        AuthorizationType.AUTHORIZATION -> Screens.Main.route
-        AuthorizationType.NOT_AUTHORIZATION -> Screens.Auth.route
-        else -> Screens.Splash.route
-    }
-
-    navHostController.navigate(route) {
-        popUpTo(route) {
-            inclusive = true
-            saveState = true
-        }
-        launchSingleTop = true
-        restoreState = true
     }
 }
