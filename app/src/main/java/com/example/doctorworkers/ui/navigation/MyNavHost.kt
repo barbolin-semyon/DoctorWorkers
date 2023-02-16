@@ -14,11 +14,10 @@ import com.example.doctorworkers.viewModel.AuthViewModel
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: String,
     scaffoldState: ScaffoldState,
     authViewModel: AuthViewModel,
 ) {
-    NavHost(navController = navController, startDestination = startDestination) {
+    NavHost(navController = navController, startDestination = Screens.Splash.route) {
         auth(navController, scaffoldState, authViewModel = authViewModel)
         main(navController)
 

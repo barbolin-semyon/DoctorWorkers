@@ -35,8 +35,6 @@ class MainActivity : ComponentActivity() {
 
             val viewModel: AuthViewModel = viewModel()
             viewModel.checkAuthorization()
-            var startDestination = Screens.Auth.route
-
 
             val navController = rememberNavController()
 
@@ -54,7 +52,6 @@ class MainActivity : ComponentActivity() {
 
                     MainNavHost(
                         navController = navController,
-                        startDestination = startDestination,
                         scaffoldState = scaffoldState,
                         authViewModel = viewModel
                     )
