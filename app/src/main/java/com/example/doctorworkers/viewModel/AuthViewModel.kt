@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.doctorworkers.model.datebase.AuthFirebaseDataSource
 import com.example.doctorworkers.model.entities.Doctor
+import com.example.doctorworkers.util.AuthorizationType
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
@@ -15,11 +17,18 @@ class AuthViewModel : ViewModel() {
     val resultRequestAuthDB: LiveData<Result<String>?>
         get() = _resultRequestAuthDB
 
-    fun isAuthorization() = db.getUser() != null
+    private val _typeAuthorization = MutableLiveData(AuthorizationType.LOADING)
+    val typeAuthorization: LiveData<AuthorizationType>
+        get() = _typeAuthorization
+    fun checkAuthorization() = viewModelScope.launch {
+        val result = async { db.getUser() != null }.await()
+        _typeAuthorization.value =
+            if (result) AuthorizationType.AUTHORIZATION else AuthorizationType.NOT_AUTHORIZATION
+    }
 
     fun signInWithEmail(password: String, email: String) = viewModelScope.launch {
         db.signIn(email, password).addOnSuccessListener {
-            _resultRequestAuthDB.value = Result.success("signIn")
+            _typeAuthorization.value = AuthorizationType.AUTHORIZATION
         }
     }
 
@@ -57,9 +66,12 @@ class AuthViewModel : ViewModel() {
     ) = viewModelScope.launch {
         val doctor = Doctor(id = id, avaragePrice = avaragePrice, name = name)
         db.addDoctorInDatabase(doctor).addOnSuccessListener {
-            _resultRequestAuthDB.value = Result.success("registration")
+            _typeAuthorization.value = AuthorizationType.AUTHORIZATION
         }
     }
 
-    fun signOut() = viewModelScope.launch { db.signOut() }
+    fun signOut() = viewModelScope.launch {
+        async { db.signOut() }.await()
+        _typeAuthorization.value = AuthorizationType.NOT_AUTHORIZATION
+    }
 }
