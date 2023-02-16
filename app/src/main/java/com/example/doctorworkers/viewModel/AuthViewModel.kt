@@ -7,8 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.doctorworkers.model.datebase.AuthFirebaseDataSource
 import com.example.doctorworkers.model.entities.Doctor
 import com.example.doctorworkers.util.AuthorizationType
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AuthViewModel : ViewModel() {
     private val db = AuthFirebaseDataSource
@@ -21,7 +22,9 @@ class AuthViewModel : ViewModel() {
     val typeAuthorization: LiveData<AuthorizationType>
         get() = _typeAuthorization
     fun checkAuthorization() = viewModelScope.launch {
-        val result = async { db.getUser() != null }.await()
+        signOut()
+        val result =
+            withContext(Dispatchers.Default) { db.getUser() != null }
         _typeAuthorization.value =
             if (result) AuthorizationType.AUTHORIZATION else AuthorizationType.NOT_AUTHORIZATION
     }
@@ -71,7 +74,7 @@ class AuthViewModel : ViewModel() {
     }
 
     fun signOut() = viewModelScope.launch {
-        async { db.signOut() }.await()
+        withContext(Dispatchers.Default) { db.signOut() }
         _typeAuthorization.value = AuthorizationType.NOT_AUTHORIZATION
     }
 }
