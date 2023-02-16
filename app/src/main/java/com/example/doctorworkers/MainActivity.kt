@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -17,6 +18,7 @@ import com.example.doctorworkers.ui.theme.Gray200
 import com.example.doctorworkers.ui.theme.MaterialThemeDoctor
 import com.example.doctorworkers.util.AuthorizationType
 import com.example.doctorworkers.viewModel.AuthViewModel
+import com.example.doctorworkers.viewModel.messageError
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +26,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val scaffoldState = rememberScaffoldState()
+            val messageError = messageError.observeAsState("")
+            LaunchedEffect(key1 = messageError, block = {
+                if (messageError.value != "") {
+                    scaffoldState.snackbarHostState.showSnackbar(messageError.value)
+                }
+            })
 
             val viewModel: AuthViewModel = viewModel()
             viewModel.checkAuthorization()
