@@ -50,8 +50,26 @@ class MainActivity : ComponentActivity() {
                         startDestination = startDestination,
                         scaffoldState = scaffoldState
                     )
+
+                    ObserverAuthorizationState(
+                        viewModel = viewModel,
+                        navHostController = navController
+                    )
                 }
             }
         }
     }
 }
+
+@Composable
+private fun ObserverAuthorizationState(
+    viewModel: AuthViewModel,
+    navHostController: NavHostController
+) {
+    val state = viewModel.typeAuthorization.observeAsState()
+
+    val route = when (state.value) {
+        AuthorizationType.AUTHORIZATION -> Screens.Main.route
+        AuthorizationType.NOT_AUTHORIZATION -> Screens.Auth.route
+        else -> Screens.Splash.route
+    }
