@@ -6,6 +6,7 @@ import com.example.doctorworkers.R
 sealed class Screens(val route: String) {
     object Auth: Screens("auth")
     object Main: Screens("main")
+    object Splash: Screens("splash")
 }
 
 sealed class AuthScreen(val route: String) {

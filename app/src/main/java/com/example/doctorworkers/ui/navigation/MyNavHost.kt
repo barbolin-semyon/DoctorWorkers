@@ -20,6 +20,10 @@ fun MainNavHost(
     NavHost(navController = navController, startDestination = startDestination) {
         auth(navController, scaffoldState)
         main(navController)
+
+        composable(Screens.Splash.route) {
+
+        }
     }
 }
 
