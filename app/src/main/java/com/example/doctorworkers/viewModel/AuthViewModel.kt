@@ -17,6 +17,7 @@ class AuthViewModel : ViewModel() {
     private val _typeAuthorization = MutableLiveData(AuthorizationType.LOADING)
     val typeAuthorization: LiveData<AuthorizationType>
         get() = _typeAuthorization
+
     fun checkAuthorization() = viewModelScope.launch {
         val result =
             withContext(Dispatchers.Default) { db.getUser() != null }
@@ -25,9 +26,13 @@ class AuthViewModel : ViewModel() {
     }
 
     fun signInWithEmail(password: String, email: String) = viewModelScope.launch {
-        db.signIn(email, password).addOnSuccessListener {
-            _typeAuthorization.value = AuthorizationType.AUTHORIZATION
-        }
+        db.signIn(email, password)
+            .addOnSuccessListener {
+                _typeAuthorization.value = AuthorizationType.AUTHORIZATION
+            }
+            .addOnFailureListener {
+                showMessageError()
+            }
     }
 
     fun registration(
@@ -44,6 +49,9 @@ class AuthViewModel : ViewModel() {
                         createUser(password, email, avaragePrice, name)
                     }
                 }
+                .addOnFailureListener {
+                    showMessageError("Не верный код")
+                }
         }
 
     private fun createUser(
@@ -52,9 +60,13 @@ class AuthViewModel : ViewModel() {
         avaragePrice: Int,
         name: String
     ) = viewModelScope.launch {
-        db.createUser(email, password).addOnSuccessListener {
-            addUserInDb(avaragePrice, name, it.user!!.uid)
-        }
+        db.createUser(email, password)
+            .addOnSuccessListener {
+                addUserInDb(avaragePrice, name, it.user!!.uid)
+            }
+            .addOnFailureListener {
+                showMessageError()
+            }
     }
 
     private fun addUserInDb(
@@ -63,9 +75,13 @@ class AuthViewModel : ViewModel() {
         id: String,
     ) = viewModelScope.launch {
         val doctor = Doctor(id = id, avaragePrice = avaragePrice, name = name)
-        db.addDoctorInDatabase(doctor).addOnSuccessListener {
-            _typeAuthorization.value = AuthorizationType.AUTHORIZATION
-        }
+        db.addDoctorInDatabase(doctor)
+            .addOnSuccessListener {
+                _typeAuthorization.value = AuthorizationType.AUTHORIZATION
+            }
+            .addOnFailureListener {
+                showMessageError()
+            }
     }
 
     fun signOut() = viewModelScope.launch {
