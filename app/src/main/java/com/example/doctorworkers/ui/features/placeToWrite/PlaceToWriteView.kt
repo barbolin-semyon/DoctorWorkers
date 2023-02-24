@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.doctors.entities.PlaceToWrite
+import com.example.doctorworkers.ui.navigation.TimeTableScreen
 import com.example.doctorworkers.viewModel.AuthViewModel
 import com.example.doctorworkers.viewModel.PlacesViewModel
 import java.util.*
@@ -34,21 +35,31 @@ fun PlaceToWriteView(navController: NavController) {
 
         val places =
             viewModel.places.observeAsState(listOf()) as MutableState<List<PlaceToWrite>>
-        ListPlaces(places = places, viewModel = viewModel, doctorId = doctorId)
+        ListPlaces(
+            places = places,
+            viewModel = viewModel,
+            navController = navController
+        )
     }
 }
 
 @Composable
 private fun ListPlaces(
     places: MutableState<List<PlaceToWrite>>,
+    navController: NavController,
     viewModel: PlacesViewModel,
-    doctorId: String
 ) {
     LazyColumn(Modifier.padding(top = 8.dp)) {
         items(places.value) { place ->
             PlaceItem(
                 place = place,
-                doctorId = doctorId,
+                showDetail = { patientId ->
+                    navController.currentBackStackEntry?.arguments?.putString(
+                        "patientId",
+                        patientId
+                    )
+                    navController.navigate(TimeTableScreen.DetailPlace.route)
+                },
                 takePlace = { place, doctorId -> viewModel.takePlace(place, doctorId) },
                 takeOfPlace = { placeId, doctorId ->
                     viewModel.takeOfPlace(placeId, doctorId)
