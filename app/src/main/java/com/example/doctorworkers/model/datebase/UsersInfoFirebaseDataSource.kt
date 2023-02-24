@@ -1,6 +1,7 @@
 package com.example.doctorworkers.model.datebase
 
 import com.example.doctors.entities.History
+import com.example.doctorworkers.model.entities.Toothes
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,6 +19,12 @@ object UsersInfoFirebaseDataSource {
     suspend fun getPatientInfo(userId: String): Task<DocumentSnapshot> = withContext(dispatcher) {
         return@withContext firestore.collection("users").document(userId).get()
     }
+
+    suspend fun updatePatientToothes(patientId: String, toothes: List<String>) =
+        withContext(dispatcher) {
+            return@withContext firestore.collection("users").document(patientId)
+                .update("toothes", toothes)
+        }
 
     suspend fun setHistory(userId: String, history: History) = withContext(dispatcher) {
         return@withContext firestore

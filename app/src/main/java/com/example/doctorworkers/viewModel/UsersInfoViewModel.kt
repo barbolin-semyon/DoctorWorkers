@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.doctors.entities.History
 import com.example.doctors.entities.Patient
+import com.example.doctors.util.parseListToothesToListId
 import com.example.doctorworkers.model.datebase.AuthFirebaseDataSource
 import com.example.doctorworkers.model.datebase.UsersInfoFirebaseDataSource
 import com.example.doctorworkers.model.entities.Doctor
+import com.example.doctorworkers.model.entities.Toothes
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -34,6 +36,11 @@ class UsersInfoViewModel : ViewModel() {
                     showMessageError("Ошибка идентификации пользователя")
                 }
             }
+    }
+
+    fun updateToothes(patientId: String, toothes: List<Toothes>) = viewModelScope.launch {
+        val toothesId = parseListToothesToListId(toothes)
+        db.updatePatientToothes(patientId, toothesId)
     }
 
     fun getDoctorInformation() = viewModelScope.launch {
