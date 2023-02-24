@@ -1,4 +1,4 @@
-package com.example.doctorworkers.ui.auth
+package com.example.doctorworkers.ui.features.auth
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
