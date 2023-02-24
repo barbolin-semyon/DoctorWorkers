@@ -13,3 +13,12 @@ sealed class Toothes(
     object InWorkTooth : Toothes(R.drawable.ic_tooth_heart, "Лечится", "inWork")
     object СariesTooth : Toothes(R.drawable.ic_caries_tooth, "Кариес", "caries")
 }
+
+fun Toothes.getNextToothType(): Toothes {
+    return when(this) {
+        is Toothes.BrokenTooth -> Toothes.InWorkTooth
+        is Toothes.InWorkTooth -> Toothes.HealthyTooth
+        is Toothes.HealthyTooth -> Toothes.СariesTooth
+        else -> Toothes.BrokenTooth
+    }
+}
