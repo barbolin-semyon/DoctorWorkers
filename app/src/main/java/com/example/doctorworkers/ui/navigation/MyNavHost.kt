@@ -9,8 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.doctors.ui.views.auth.Registration
 import com.example.doctors.ui.views.auth.SignInView
+import com.example.doctorworkers.ui.features.patientCard.UserInfoScreen
 import com.example.doctorworkers.ui.features.placeToWrite.PlaceToWriteView
 import com.example.doctorworkers.viewModel.AuthViewModel
+import com.google.firebase.auth.UserInfo
 
 @Composable
 fun MainNavHost(
@@ -71,7 +73,12 @@ private fun NavGraphBuilder.timetable(navController: NavHostController) {
         }
 
         composable(TimeTableScreen.DetailPlace.route) {
+            val currentPatientId =
+                navController.previousBackStackEntry?.arguments?.getString("patientId")
 
+            currentPatientId?.let {
+                UserInfoScreen(navController, it)
+            }
         }
     }
 }
