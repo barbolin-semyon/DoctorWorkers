@@ -33,7 +33,7 @@ object AuthFirebaseDataSource {
     }
 
     suspend fun addDoctorInDatabase(doctor: Doctor) = withContext(ioDispatcher) {
-        return@withContext firestore.collection("doctors").add(doctor)
+        return@withContext firestore.collection("doctors").document(doctor.id).set(doctor)
     }
 
     suspend fun getWorkPassword() = withContext(ioDispatcher) {
