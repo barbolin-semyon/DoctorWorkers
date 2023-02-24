@@ -9,6 +9,21 @@ fun parseListIdToListToothes(listId: List<String>): MutableList<Toothes> {
     return toothes
 }
 
+fun parseListToothesToListId(toothes: List<Toothes>): MutableList<String> {
+    val toothesId = mutableListOf<String>()
+    toothes.forEach { toothesId.add(it.id) }
+    return toothesId
+}
+
+fun getNextTypeTooth(tooth: Toothes): Toothes {
+    return when(tooth) {
+        is Toothes.BrokenTooth -> Toothes.InWorkTooth
+        is Toothes.InWorkTooth -> Toothes.HealthyTooth
+        is Toothes.HealthyTooth -> Toothes.СariesTooth
+        else -> Toothes.BrokenTooth
+    }
+}
+
 private fun getToothById(toothId: String): Toothes {
     return when(toothId) {
         Toothes.BrokenTooth.id -> Toothes.BrokenTooth
