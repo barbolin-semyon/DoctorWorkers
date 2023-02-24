@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.doctors.ui.views.auth.Registration
 import com.example.doctors.ui.views.auth.SignInView
+import com.example.doctorworkers.ui.features.placeToWrite.PlaceToWriteView
 import com.example.doctorworkers.viewModel.AuthViewModel
 
 @Composable
@@ -66,7 +67,7 @@ private fun NavGraphBuilder.timetable(navController: NavHostController) {
         route = MainScreen.TimeTable.route
     ) {
         composable(TimeTableScreen.PlacesToWrite.route) {
-
+            PlaceToWriteView(navController = navController)
         }
 
         composable(TimeTableScreen.DetailPlace.route) {
