@@ -23,7 +23,7 @@ fun PlaceItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                if (place.idDoctor != place.idPatient) {
+                if (place.idDoctor != place.idPatient && place.isTaken) {
                     showDetail(place.idPatient)
                 }
             }
