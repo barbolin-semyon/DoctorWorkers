@@ -18,6 +18,8 @@ class AuthViewModel : ViewModel() {
     val typeAuthorization: LiveData<AuthorizationType>
         get() = _typeAuthorization
 
+    fun getDoctorId() = db.getUser()!!.uid
+
     fun checkAuthorization() = viewModelScope.launch {
         val result =
             withContext(Dispatchers.Default) { db.getUser() != null }
