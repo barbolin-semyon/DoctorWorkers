@@ -33,14 +33,4 @@ object PlacesFirebaseDataSource {
             .collection("places").document(placeId)
             .delete()
     }
-
-    suspend fun getPatientInfo(userId: String): Task<DocumentSnapshot> = withContext(dispatcher) {
-        return@withContext firestore.collection("users").document(userId).get()
-    }
-
-    suspend fun setHistory(userId: String, history: History) = withContext(dispatcher) {
-        return@withContext firestore
-            .collection("users").document(userId)
-            .collection("history").document(history.id).set(history)
-    }
 }
