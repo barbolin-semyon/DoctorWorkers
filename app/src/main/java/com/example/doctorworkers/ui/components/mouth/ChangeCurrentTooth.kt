@@ -1,5 +1,6 @@
 package com.example.doctorworkers.ui.components.mouth
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,7 +18,11 @@ import androidx.compose.ui.unit.dp
 import com.example.doctorworkers.model.entities.Toothes
 
 @Composable
-fun ChangeCurrentTooth(toothes: List<Toothes>, indexSelected: MutableState<Int>) {
+fun ChangeCurrentTooth(
+    toothes: List<Toothes>,
+    indexSelected: MutableState<Int>,
+    changeTypeTooth: () -> Unit
+) {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -33,7 +38,10 @@ fun ChangeCurrentTooth(toothes: List<Toothes>, indexSelected: MutableState<Int>)
             }
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.clickable { changeTypeTooth() }
+        ) {
             Tooth(
                 isUpperJaw = false,
                 tooth = toothes[indexSelected.value],
