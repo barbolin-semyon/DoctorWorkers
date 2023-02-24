@@ -1,6 +1,7 @@
 package com.example.doctorworkers.model.datebase
 
 import com.example.doctors.entities.History
+import com.example.doctors.entities.PlaceToWrite
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,6 +18,20 @@ object PlacesFirebaseDataSource {
             .collection("doctors").document(doctor)
             .collection("places").whereEqualTo("year", year)
             .whereEqualTo("month", month).whereEqualTo("day", day)
+    }
+
+    suspend fun createTakenPlace(placeToWrite: PlaceToWrite) = withContext(dispatcher) {
+        return@withContext firestore
+            .collection("doctors").document(placeToWrite.idDoctor)
+            .collection("places").document(placeToWrite.id)
+            .set(placeToWrite)
+    }
+
+    suspend fun deleteTakenPlace(placeId: String, idDoctor: String) = withContext(dispatcher) {
+        return@withContext firestore
+            .collection("doctors").document(idDoctor)
+            .collection("places").document(placeId)
+            .delete()
     }
 
     suspend fun getPatientInfo(userId: String): Task<DocumentSnapshot> = withContext(dispatcher) {
