@@ -49,5 +49,29 @@ class UsersInfoViewModel : ViewModel() {
             }
     }
 
+    fun writeReport(
+        userId: String,
+        date: Date = Date(),
+        description: String = "",
+    ) {
+        getDoctorInformation()
+        _doctor.observeForever {
+            setHistory(
+                userId,
+                History(
+                    date = date,
+                    description = description,
+                    doctorId = it.id,
+                    nameDoctor = it.name
+                )
+            )
 
+        }
+    }
+
+    private fun setHistory(userId: String, history: History) = viewModelScope.launch {
+        db.setHistory(userId, history)
+            .addOnSuccessListener { }
+            .addOnFailureListener { showMessageError(it.message.toString()) }
+    }
 }
