@@ -49,14 +49,14 @@ fun PlaceItem(
                         onClick = { takePlace(place, place.idDoctor) },
                         enabled = place.isTaken.not()
                     ) {
-                        Text(text = "Записаться")
+                        Text(text = "Заморозить бронь")
                     }
 
                     if (place.idDoctor == place.idPatient) {
                         TextButton(
                             onClick = { takeOfPlace(place.id, place.idDoctor) },
                         ) {
-                            Text(text = "Снять бронь")
+                            Text(text = "Разморозить бронь")
                         }
                     }
                 }
