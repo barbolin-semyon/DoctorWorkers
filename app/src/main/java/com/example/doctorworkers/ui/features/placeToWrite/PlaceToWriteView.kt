@@ -27,11 +27,14 @@ fun PlaceToWriteView(navController: NavController) {
             viewModel.enableListenerCollection(currentDate.value, doctorId = doctorId)
         })
 
-        LaunchedEffect(key1 = currentDate, block = {
+        LaunchedEffect(key1 = Unit, block = {
             viewModel.updateDateForPlaces(currentDate = currentDate, doctorId)
         })
 
-        ChangeDate(currentDate)
+        ChangeDate(currentDate.value) {
+            currentDate.value = it
+            viewModel.updateDateForPlaces(currentDate = currentDate, doctorId)
+        }
 
         val places =
             viewModel.places.observeAsState(listOf()) as MutableState<List<PlaceToWrite>>
