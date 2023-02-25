@@ -10,6 +10,7 @@ data class PlaceToWrite(
     val year: Int = 2022,
     val month: Int = 2,
     val day: Int = 20,
+    val hasReport: Boolean = false,
     @field:JvmField
     var isTaken: Boolean = false,
     var id: String = UUID.randomUUID().toString()
