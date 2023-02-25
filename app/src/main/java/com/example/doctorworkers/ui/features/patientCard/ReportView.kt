@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,9 +19,9 @@ import kotlinx.coroutines.Job
 fun ReportView(patientId: String, hideBottomSheet: () -> Job) {
     var description by remember { mutableStateOf("") }
     val viewModel: UsersInfoViewModel = viewModel()
-    val isHideBottomSheet by remember { mutableStateOf(false) }
+    val isHideBottomSheet = viewModel.requestIsSuccess.observeAsState()
 
-    if (isHideBottomSheet) {
+    if (isHideBottomSheet.value == true) {
         hideBottomSheet()
     }
 

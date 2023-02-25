@@ -26,6 +26,10 @@ class UsersInfoViewModel : ViewModel() {
     val patient: LiveData<Patient>
         get() = _patient
 
+    private val _requestIsSuccess = MutableLiveData(false)
+    val requestIsSuccess: LiveData<Boolean>
+        get() = _requestIsSuccess
+
     fun getPatientInformation(patientId: String) = viewModelScope.launch {
         db.getPatientInfo(userId = patientId)
             .addOnSuccessListener { docScnapshot ->
@@ -58,9 +62,9 @@ class UsersInfoViewModel : ViewModel() {
 
     fun writeReport(
         userId: String,
-        date: Date = Date(),
         description: String = "",
     ) {
+        val date = Calendar.getInstance().time
         getDoctorInformation()
         _doctor.observeForever {
             setHistory(
@@ -78,7 +82,7 @@ class UsersInfoViewModel : ViewModel() {
 
     private fun setHistory(userId: String, history: History) = viewModelScope.launch {
         db.setHistory(userId, history)
-            .addOnSuccessListener { }
+            .addOnSuccessListener { _requestIsSuccess.value = true }
             .addOnFailureListener { showMessageError(it.message.toString()) }
     }
 }
