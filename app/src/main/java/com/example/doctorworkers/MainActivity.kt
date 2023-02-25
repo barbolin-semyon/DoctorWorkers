@@ -46,8 +46,6 @@ class MainActivity : ComponentActivity() {
                     },
                     scaffoldState = scaffoldState
                 ) {
-                    val ui = rememberSystemUiController()
-                    ui.setStatusBarColor(Gray200)
 
                     MainNavHost(
                         navController = navController,
