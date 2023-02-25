@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.doctors.ui.views.auth.Registration
 import com.example.doctors.ui.views.auth.SignInView
+import com.example.doctorworkers.ui.features.doctorProfile.DoctorProfile
 import com.example.doctorworkers.ui.features.patientCard.UserInfoScreen
 import com.example.doctorworkers.ui.features.placeToWrite.PlaceToWriteView
 import com.example.doctorworkers.viewModel.AuthViewModel
@@ -64,7 +65,7 @@ private fun NavGraphBuilder.auth(
 private fun NavGraphBuilder.main(navController: NavHostController) {
     navigation(startDestination = MainScreen.Profile.route, route = Screens.Main.route) {
         composable(MainScreen.Profile.route) {
-
+            DoctorProfile()
         }
         timetable(navController)
     }

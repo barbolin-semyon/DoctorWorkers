@@ -62,11 +62,12 @@ fun RatingText(rating: Double) {
 }
 
 @Composable
-fun Title(text: String, fontSize: TextUnit) {
+fun Title(text: String, fontSize: TextUnit, modifier: Modifier = Modifier) {
     Text(
         text = text,
         color = MaterialTheme.colors.primaryVariant,
         fontWeight = FontWeight.Bold,
         fontSize = fontSize,
+        modifier = modifier
     )
 }
