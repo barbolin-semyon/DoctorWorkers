@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.doctors.entities.PlaceToWrite
 import com.example.doctorworkers.R
+import com.example.doctorworkers.ui.theme.Blue200
+import com.example.doctorworkers.ui.theme.Gray700
+import com.example.doctorworkers.ui.theme.Green
+import com.example.doctorworkers.ui.theme.Orange200
 
 @Composable
 fun PlaceItem(
@@ -23,7 +28,7 @@ fun PlaceItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                if (place.idDoctor != place.idPatient && place.isTaken) {
+                if (place.idDoctor != place.idPatient && place.isTaken && place.hasReport.not()) {
                     showDetail(place.idPatient)
                 }
             }
@@ -34,12 +39,11 @@ fun PlaceItem(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(10.dp),
-                color = colorResource(
-                    id = getColorIdByIsTaken(
-                        place.isTaken,
-                        place.idPatient == place.idDoctor
-                    )
-                ),
+                color = getColorIdByIsTaken(
+                    place.isTaken,
+                    place.idDoctor == place.idPatient,
+                    place.hasReport
+                )
             )
 
             Column {
@@ -67,11 +71,18 @@ fun PlaceItem(
 
 }
 
-private fun getColorIdByIsTaken(isTaken: Boolean, isDoctor: Boolean): Int {
+private fun getColorIdByIsTaken(isTaken: Boolean, isDoctor: Boolean, hasReport: Boolean): Color {
     return if (isTaken) {
-        if (isDoctor) R.color.gray_700
-        else R.color.orange_200
+        if (isDoctor) {
+            Gray700
+        } else {
+            if (hasReport) {
+                Green
+            } else {
+                Orange200
+            }
+        }
     } else {
-        R.color.blue_200
+        Blue200
     }
 }
