@@ -1,7 +1,10 @@
 package com.example.doctorworkers.ui.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -12,15 +15,19 @@ import com.example.doctors.ui.views.auth.SignInView
 import com.example.doctorworkers.ui.features.patientCard.UserInfoScreen
 import com.example.doctorworkers.ui.features.placeToWrite.PlaceToWriteView
 import com.example.doctorworkers.viewModel.AuthViewModel
-import com.google.firebase.auth.UserInfo
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
     scaffoldState: ScaffoldState,
     authViewModel: AuthViewModel,
+    paddingValues: PaddingValues,
 ) {
-    NavHost(navController = navController, startDestination = Screens.Splash.route) {
+    NavHost(
+        modifier = Modifier.padding(paddingValues),
+        navController = navController,
+        startDestination = Screens.Splash.route
+    ) {
         auth(navController, scaffoldState, authViewModel = authViewModel)
         main(navController)
 
@@ -77,7 +84,7 @@ private fun NavGraphBuilder.timetable(navController: NavHostController) {
                 navController.previousBackStackEntry?.arguments?.getString("patientId")
 
             currentPatientId?.let {
-                UserInfoScreen(navController, it)
+                UserInfoScreen(it)
             }
         }
     }

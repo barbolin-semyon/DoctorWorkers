@@ -5,22 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.doctorworkers.ui.features.auth.ObserverAuthorizationState
 import com.example.doctorworkers.ui.navigation.BottomNavigationDoctorWorker
 import com.example.doctorworkers.ui.navigation.MainNavHost
-import com.example.doctorworkers.ui.navigation.Screens
-import com.example.doctorworkers.ui.theme.Gray200
 import com.example.doctorworkers.ui.theme.MaterialThemeDoctor
-import com.example.doctorworkers.util.AuthorizationType
 import com.example.doctorworkers.viewModel.AuthViewModel
 import com.example.doctorworkers.viewModel.messageError
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     MainNavHost(
                         navController = navController,
                         scaffoldState = scaffoldState,
-                        authViewModel = viewModel
+                        authViewModel = viewModel,
+                        paddingValues = it
                     )
 
                     ObserverAuthorizationState(
