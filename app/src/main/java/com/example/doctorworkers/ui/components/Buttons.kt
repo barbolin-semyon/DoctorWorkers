@@ -26,6 +26,7 @@ import java.util.*
 
 @Composable
 fun AppButton(
+    modifier: Modifier = Modifier,
     text: String,
     isEnabled: Boolean = true,
     onClick: () -> Unit
@@ -33,7 +34,7 @@ fun AppButton(
     Button(
         onClick = { onClick() },
         enabled = isEnabled,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
