@@ -11,18 +11,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.doctors.entities.PlaceToWrite
 import com.example.doctors.ui.components.AppButton
+import com.example.doctorworkers.ui.navigation.TimeTableScreen
 import com.example.doctorworkers.viewModel.UsersInfoViewModel
 import kotlinx.coroutines.Job
 
 @Composable
-fun ReportView(patientId: String, hideBottomSheet: () -> Job) {
+fun ReportView(
+    patientId: String,
+    navController: NavController,
+    placeId: String,
+    hideBottomSheet: () -> Job
+) {
     var description by remember { mutableStateOf("") }
     val viewModel: UsersInfoViewModel = viewModel()
-    val isHideBottomSheet = viewModel.requestIsSuccess.observeAsState()
+    val isOpenPlaces = viewModel.requestIsSuccess.observeAsState()
 
-    if (isHideBottomSheet.value == true) {
-        hideBottomSheet()
+    if (isOpenPlaces.value == true) {
+        navController.navigate(TimeTableScreen.PlacesToWrite.route) {
+            popUpTo(navController.graph.startDestinationId) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 
     Column(
@@ -37,7 +51,12 @@ fun ReportView(patientId: String, hideBottomSheet: () -> Job) {
             value = description,
             onValueChange = { description = it })
         AppButton(text = "Сохранить отчет") {
-            viewModel.writeReport(userId = patientId, description = description)
+            hideBottomSheet()
+            viewModel.writeReport(
+                userId = patientId,
+                description = description,
+                placeId = placeId,
+            )
         }
     }
 

@@ -43,10 +43,10 @@ private fun TitleUser(name: String) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun UserInfoScreen(patientId: String) {
+fun UserInfoScreen(patientId: String, placeId: String, navController: NavController) {
     BottomActionSheetWithContent(
         sheetContent = { state, scope ->
-            ReportView(patientId) { scope.launch { state.hide() } }
+            ReportView(patientId, navController, placeId) { scope.launch { state.hide() } }
         }
     ) { state, scope ->
         val viewModel: UsersInfoViewModel = viewModel()

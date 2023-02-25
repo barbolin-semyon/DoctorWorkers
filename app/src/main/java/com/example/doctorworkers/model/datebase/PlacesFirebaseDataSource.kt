@@ -27,6 +27,13 @@ object PlacesFirebaseDataSource {
             .set(placeToWrite)
     }
 
+    suspend fun updateHasReport(placeId: String, doctorId: String) = withContext(dispatcher) {
+        return@withContext firestore
+            .collection("doctors").document(doctorId)
+            .collection("places").document(placeId)
+            .update("hasReport", true)
+    }
+
     suspend fun deleteTakenPlace(placeId: String, idDoctor: String) = withContext(dispatcher) {
         return@withContext firestore
             .collection("doctors").document(idDoctor)

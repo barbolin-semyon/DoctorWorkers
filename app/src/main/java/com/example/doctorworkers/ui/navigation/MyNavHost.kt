@@ -83,8 +83,12 @@ private fun NavGraphBuilder.timetable(navController: NavHostController) {
             val currentPatientId =
                 navController.previousBackStackEntry?.arguments?.getString("patientId")
 
-            currentPatientId?.let {
-                UserInfoScreen(it)
+            val placeId = navController.previousBackStackEntry?.arguments?.getString("placeId")
+
+            currentPatientId?.let { patient ->
+                placeId?.let { place ->
+                    UserInfoScreen(patient, place, navController)
+                }
             }
         }
     }

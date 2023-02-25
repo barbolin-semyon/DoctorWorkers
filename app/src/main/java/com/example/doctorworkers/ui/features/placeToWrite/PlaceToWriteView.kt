@@ -61,6 +61,11 @@ private fun ListPlaces(
                         "patientId",
                         patientId
                     )
+
+                    navController.currentBackStackEntry?.arguments?.putString(
+                        "placeId",
+                        place.id
+                    )
                     navController.navigate(TimeTableScreen.DetailPlace.route)
                 },
                 takePlace = { place, doctorId -> viewModel.takePlace(place, doctorId) },
