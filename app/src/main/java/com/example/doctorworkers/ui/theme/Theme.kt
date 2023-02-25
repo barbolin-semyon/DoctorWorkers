@@ -20,7 +20,7 @@ private val lightPallete = lightColors(
     primaryVariant = Blue700,
     secondary = Orange200,
     secondaryVariant = Orange700,
-    background = Gray200,
+    background = Color.White,
     surface = Color.White
 
 )
